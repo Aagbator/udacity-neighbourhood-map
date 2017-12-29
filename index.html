@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Neighbourhood Map</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="apple-touch-icon" href="icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+
+
+<div class="wrapper">
+    <!-- Sidebar Holder -->
+    <nav class="sidebar">
+        <h3>Neighbourhood Map</h3>
+        <form>
+            <input class="search-input" type="text"/>
+            <button  class="search-btn">Search</button>
+        </form>
+    </nav>
+    <div class="map-area" id="map"></div>
+</div>
+
+
+
+
+
+<!-- jQuery CDN -->
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<!-- Bootstrap Js CDN -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+<script src="js/main.js"></script>
+<script type="text/javascript">
+
+    var map;
+
+    function initMap() {
+        var centerLocation = {lat: 6.6102296, lng: 3.3437677};
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 11,
+            center: centerLocation
+        });
+        viewModel.renderMakers(map);
+    }
+
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQBGkLwVnRyNXCcHxNugimczSZn889I5c&callback=initMap">
+</script>
+
+</body>
+</html>
