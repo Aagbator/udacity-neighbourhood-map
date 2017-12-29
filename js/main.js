@@ -8,12 +8,13 @@ function MyViewModel(){
     this.locationData = locationData;
     this.filteredLocation = locationData;
     this.filterText = ko.observable("");
+    this.temp_markers = [];
 
 
     this.renderMakers = function(map){
         self.map = map;//initialize the map object
 
-        self.locationData.forEach(function(location) {
+        self.filteredLocation.forEach(function(location) {
 
         var marker = new google.maps.Marker({ position: location, map: map, title: location.name});
 
@@ -31,10 +32,12 @@ function MyViewModel(){
                 self.getInfoWindowData(marker);
             })
             location.marker = marker;
+            self.temp_markers.push(marker);
         })
 
 
     }
+
 
     this.getInfoWindowData = function(marker){
 
@@ -75,16 +78,26 @@ function MyViewModel(){
         google.maps.event.trigger(location.marker, "click");
     }
 
+    this.removeAllMarkers = function(){
+        self.temp_markers.map(function(marker){
+            marker.setVisible(false);
+        })
+        self.temp_markers = [];
+    }
+
     this.onFilter = function(){ //filter function for button an search field
 
         //alert("test");
 
+        //remove markers from map
+        self.removeAllMarkers();
+
         if(!self.filterText()){
 
             self.filteredLocation = locationData;
-            self.availableLocations(self.filteredPlaces);
+            self.availableLocations(self.filteredLocation);
             self.renderMakers(self.map);
-            return null;
+            return self.availableLocations(locationData);
 
         }
 
@@ -96,6 +109,8 @@ function MyViewModel(){
         self.availableLocations(self.filteredLocation);
         self.renderMakers(self.map);
     }
+
+
 
 
 }
