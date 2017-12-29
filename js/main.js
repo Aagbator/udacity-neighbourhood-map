@@ -79,10 +79,7 @@ function MyViewModel(){
 
                 infowindow.open(self.map, marker);
             }
-            error: function(xhr,errStatus){
-                alert("Error : " +errStatus);
-            }
-        })
+        });
 
 
     }
