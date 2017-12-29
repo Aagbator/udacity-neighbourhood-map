@@ -11,6 +11,7 @@
     <link rel="apple-touch-icon" href="icon.png">
     <!-- Place favicon.ico in the root directory -->
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
@@ -20,14 +21,22 @@
 
 <div class="wrapper">
     <!-- Sidebar Holder -->
-    <nav class="sidebar">
+    <nav class="sidebar close">
+        <div class="menu-btn"><i class="fa fa-bars"></i></div>
         <h3>Neighbourhood Map</h3>
         <form>
             <input class="search-input" type="text"/>
-            <button  class="search-btn">Search</button>
+            <button  class="search-btn">Filter <i class="fa fa-filter"></i> </button>
         </form>
+        <div>
+            <ul class="location-list" data-bind="foreach: availableLocations">
+                <li>
+                    <a href="#" data-bind="text: name,  event: {click: $root.onLocationClicked}"></a>
+                </li>
+            </ul>
+        </div>
     </nav>
-    <div class="map-area" id="map"></div>
+    <main class="map-area" id="map"></main>
 </div>
 
 
@@ -52,6 +61,12 @@
         });
         viewModel.renderMakers(map);
     }
+
+    $('document').ready(function(){
+        $('.menu-btn').click(function(){
+            $('.sidebar').toggleClass('close');
+        });
+    })
 
 </script>
 <script async defer

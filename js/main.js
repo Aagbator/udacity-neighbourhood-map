@@ -1,3 +1,5 @@
+
+
 var locationData = [
     {
         name:"Lagos Airport Hotel Ikeja", lat:6.6102296, lng:3.3437677, marker : null
@@ -16,10 +18,11 @@ var locationData = [
     }
 ]
 
-function myViewModel(){
+function MyViewModel(){
 
     var self = this;
     this.map;
+    this.availableLocations = ko.observableArray(locationData);
     this.locationData = locationData;
 
 
@@ -76,13 +79,20 @@ function myViewModel(){
 
                 infowindow.open(self.map, marker);
             }
+            error: function(xhr,errStatus){
+                alert("Error : " +errStatus);
+            }
         })
 
 
     }
 
+    this.onLocationClicked = function(location){
+        google.maps.event.trigger(location.marker, "click");
+    }
+
 
 }
 
-var viewModel = new myViewModel();
+var viewModel = new MyViewModel();
 ko.applyBindings(viewModel)
