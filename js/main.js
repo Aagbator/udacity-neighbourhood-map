@@ -78,6 +78,9 @@ function MyViewModel(){
                 });
 
                 infowindow.open(self.map, marker);
+            },
+            error: function() {
+                alert('An error occurred');
             }
         });
 
