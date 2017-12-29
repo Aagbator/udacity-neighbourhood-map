@@ -1,29 +1,13 @@
 
 
-var locationData = [
-    {
-        name:"Lagos Airport Hotel Ikeja", lat:6.6102296, lng:3.3437677, marker : null
-    },
-    {
-        name:"National Stadium Lagos", lat:6.4971913, lng:3.3625254, marker : null
-    },
-    {
-        name:"Art Museum", lat:6.4238367, lng:3.4445571, marker : null
-    },
-    {
-        name:"Lekki Leisure Lake", lat:6.423789, lng:3.459878, marker : null
-    },
-    {
-        name:"Eko Hotels", lat:6.4265583, lng:3.4277773, marker:null
-    }
-]
-
 function MyViewModel(){
 
     var self = this;
     this.map;
     this.availableLocations = ko.observableArray(locationData);
     this.locationData = locationData;
+    this.filteredLocation = locationData;
+    this.filterText = ko.observable("");
 
 
     this.renderMakers = function(map){
@@ -89,6 +73,28 @@ function MyViewModel(){
 
     this.onLocationClicked = function(location){
         google.maps.event.trigger(location.marker, "click");
+    }
+
+    this.onFilter = function(){ //filter function for button an search field
+
+        //alert("test");
+
+        if(!self.filterText()){
+
+            self.filteredLocation = locationData;
+            self.availableLocations(self.filteredPlaces);
+            self.renderMakers(self.map);
+            return null;
+
+        }
+
+
+        self.filteredLocation = locationData.filter( function(location){
+            return location.name.toLowerCase().indexOf(self.filterText().toLowerCase()) !== -1
+        });
+
+        self.availableLocations(self.filteredLocation);
+        self.renderMakers(self.map);
     }
 
 
